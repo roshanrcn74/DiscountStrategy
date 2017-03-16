@@ -15,17 +15,20 @@ public class GiftReceipt implements ReceiptTypeStrategy{
     private ReceiptDataAccessStrategy dataBase;
     private LineItem[] lineItems;
     private String [] messages;
+    private String reciptNum;
 
-    public GiftReceipt(ReceiptDataAccessStrategy db, String [] messages) {
+    public GiftReceipt(ReceiptDataAccessStrategy db, String [] messages, String receiptNumber) {
        setDataBase(db);    
        lineItems = new LineItem[0];
        setMessage(messages);
+       setReciptNum(receiptNumber);
     }
 
     @Override
     public String getReceipt() {
         String receipt = this.messages[1] + "\n\n";
         receipt += "Sold to : " + (this.customer == null ? "New Customer" : this.customer.getName()) + "\n\n";
+        receipt += "Receipt No : " + this.reciptNum + "\n\n";
         
         for (LineItem lineItem : this.lineItems){
             receipt += lineItem.getProduct().getProductId() + "  " + 
@@ -92,7 +95,18 @@ public class GiftReceipt implements ReceiptTypeStrategy{
     public final void setMessage(String[] messages) {
         if (messages != null && messages.length != 0){
             this.messages = messages;
+        }   
+    }
+
+    public String getReciptNum() {
+        return reciptNum;
+    }
+
+    public final void setReciptNum(String reciptNum) {
+        if (reciptNum == null || reciptNum.isEmpty()){
+            
         }
-        
-    }    
+        this.reciptNum = reciptNum;
+    }
+    
 }

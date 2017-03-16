@@ -18,9 +18,10 @@ public class PointOfSaleStartup {
         ReceiptDataAccessStrategy dataBase = new InMemoryDataAccess();
         OutputStrategy guiOutput = new GuiOutput();
         OutputStrategy consoleOutput = new ConsoleOutput();
-        //ReceiptTypeStrategy receiptType = new StandardReceipt(dataBase);
-        String[] messages = {"Welcome to Kohls", "Thanks for sopping at Kohls"};
-        ReceiptTypeStrategy receiptType = new GiftReceipt(dataBase, messages);
+        String[] messages = {"Welcome to Kohls", "Thanks for shopping at Kohls"};
+        ReceiptTypeStrategy receiptType = new StandardReceipt(dataBase, messages, "00001");
+        
+        //ReceiptTypeStrategy receiptType = new GiftReceipt(dataBase, messages, "00001");
         //receiptType.setMessage("Thanks for sopping at Kohls");
         PointOfSaleTerminal posTerminal = new PointOfSaleTerminal(guiOutput, 
                 consoleOutput,receiptType);
@@ -28,7 +29,7 @@ public class PointOfSaleStartup {
         posTerminal.startSale();
         posTerminal.addItemToSale("A101", 5);
         posTerminal.addItemToSale("B205", 2);
-        posTerminal.processPayment("500");
+        posTerminal.processPayment("300");
         posTerminal.closeSale();
     }    
 }

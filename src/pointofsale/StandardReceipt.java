@@ -14,13 +14,15 @@ public class StandardReceipt implements ReceiptTypeStrategy {
     private Customer customer;
     private ReceiptDataAccessStrategy dataBase;
     private LineItem[] lineItems;
-    private String [] message;
+    private String [] messages;
+    private String reciptNum;
     
 
-    public StandardReceipt(ReceiptDataAccessStrategy dataBase, String [] messages) {
+    public StandardReceipt(ReceiptDataAccessStrategy dataBase, String [] messages, String receiptNumber) {
        setDataBase(dataBase);    
        lineItems = new LineItem[0];
-       setMessage(message);
+       setMessage(messages);
+       setReciptNum(receiptNumber);
     }
     
     @Override
@@ -80,34 +82,72 @@ public class StandardReceipt implements ReceiptTypeStrategy {
     @Override
     public String getReceipt() {
         
-        String receipt = this.message[1] + "\n\n";
+        String receipt = this.messages[1] + "\n\n";
         receipt += "Sold to " + (this.customer.getName() == null ? "New Customer" : this.customer.getName()) + "\n\n";
+        receipt += "Receipt No : " + this.reciptNum + "\n\n";
+        receipt += "ID  Item            Price   Qty Subtotal    Discount \n";
+        receipt += "---------------------------------------------------- \n";
         for (LineItem lineItem : this.lineItems){
             receipt += lineItem.getLineItem() + "\n";
         }
+        receipt += "\n" + "Net Total : " + getSubTotalSale() + "\n";
+        receipt += "Total Save : " + getTotalDiscountSale() + "\n";
+        receipt += "Total Due : " + getTotalDueSale() + "\n";
         return receipt;
     }
 
     @Override
     public String getReceiptToDisplay() {
-        String receipt = this.message[0] + "\n\n";
+        String receipt = this.messages[0] + "\n\n";
+        receipt += "ID  Item            Price   Qty Subtotal    Discount \n";
+        receipt += "---------------------------------------------------- \n";
         for (LineItem lineItem : this.lineItems){
             receipt += lineItem.getLineItem() + "\n";
         }
+        receipt += "---------------------------------------------------- \n";
+        receipt += "\n" + "Net Total : " + getSubTotalSale() + "\n";
+        receipt += "Total Save " + getTotalDiscountSale() + "\n";
+        receipt += "Total Due " + getTotalDueSale() + "\n";
         return receipt;       
+    }
+    private double getSubTotalSale(){
+        double subTotal = 0.0;
+        for (LineItem lineItem : this.lineItems){
+            subTotal += lineItem.getProduct().getPrice() * lineItem.getQuantity();
+        }
+        return subTotal;
+    }
+    
+    private double getTotalDiscountSale(){
+        double totalDiscount = 0.0;
+        for (LineItem lineItem : this.lineItems){
+            totalDiscount += lineItem.getProduct().getPrice() * 
+                    lineItem.getQuantity() * 
+                    lineItem.getProduct().getProductDiscount().getDiscount(lineItem.getQuantity());
+        }
+        return totalDiscount;
+    }
+    
+    private double getTotalDueSale(){
+        return (getSubTotalSale() - getTotalDiscountSale());
     }
 
     @Override
     public String[] getMessage() {
-        return message;
+        return messages;
     }
 
     @Override
-    public void setMessage(String[] message) {
-        if (message != null && message.length != 0){
-            this.message = message;
+    public final void setMessage(String[] messages) {
+        if (messages != null && messages.length != 0){
+            this.messages = messages;
         }
     }
-    
-    
+
+    public final void setReciptNum(String reciptNum) {
+        if (reciptNum == null || reciptNum.isEmpty()){
+            
+        }
+        this.reciptNum = reciptNum;
+    }
 }

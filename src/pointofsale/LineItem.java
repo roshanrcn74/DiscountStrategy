@@ -27,9 +27,12 @@ public final class LineItem {
     
     public String getLineItem(){
         String lineItem = "";
-        lineItem += product.getProductId() + "   " + product.getProductName() 
-                + "   " + product.getPrice() + "  " + product.getProductDiscount() 
-                + "  " + (product.getPrice() * product.getProductDiscount().applyDiscount(quantity)) ;
+        lineItem += product.getProductId() + "   ";
+        lineItem += product.getProductName() + "   ";
+        lineItem += product.getPrice() + "  ";
+        lineItem += product.getProductDiscount().getDiscount(quantity) + "  ";
+        lineItem +=(product.getPrice() * product.getProductDiscount().getDiscount(quantity)
+                * this.quantity) ;
                 
         return lineItem;
     }

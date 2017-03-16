@@ -10,19 +10,20 @@ package pointofsale;
  * @author roshann
  */
 public final class PointOfSaleTerminal {
-    private Receipt receipt;
+    private final ReceiptTypeStrategy receipt;
     private OutputStrategy consoleOutput;
     private OutputStrategy guiOutput;
     
     
     
-    PointOfSaleTerminal(OutputStrategy guiOutput, OutputStrategy consoleOutput){
+    PointOfSaleTerminal(OutputStrategy guiOutput, OutputStrategy consoleOutput, ReceiptTypeStrategy receiptType){
         setConsoleOutput(consoleOutput);
         setGuiOutput(guiOutput);
+        this.receipt = receiptType;
     }
     
-    public void startSale(ReceiptDataAccessStrategy dataBase){
-        receipt = new Receipt(dataBase);
+    public void startSale(){
+        guiOutput.outPut(receipt.getReceiptToDisplay());
     }
 
     public final void addItemToSale(String productID, double qty) {
@@ -30,8 +31,8 @@ public final class PointOfSaleTerminal {
         displayOnScreen();
     }
 
-    private final void displayOnScreen() {
-        guiOutput.outPut(receipt.getReceipt());
+    private void displayOnScreen() {
+        guiOutput.outPut(receipt.getReceiptToDisplay());
         
     }
 
@@ -51,7 +52,5 @@ public final class PointOfSaleTerminal {
 
     public void setGuiOutput(OutputStrategy guiOutput) {
         this.guiOutput = guiOutput;
-    }
-    
-    
+    }    
 }

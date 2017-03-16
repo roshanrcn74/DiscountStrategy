@@ -10,27 +10,27 @@ package pointofsale;
  * @author roshann
  */
 public class PercentOffDiscount implements DiscountStrategy {
-    private double percentDuscount;
+    private double percentDiscount;
 
     public PercentOffDiscount(double discount) {
         setPercentDuscount(discount);
     }
 
     @Override
-    public double applyDiscount(double qty) {
+    public double getDiscount(double qty) {
         
-         return percentDuscount * qty;
+         return percentDiscount;
     }
 
     public final double getPercentDuscount() {
-        return percentDuscount;
+        return percentDiscount;
     }
 
     public final void setPercentDuscount(double percentDuscount) {
         if (percentDuscount < 0){
             throw new IllegalArgumentException("Discount cann't be negative");
         }
-        this.percentDuscount = percentDuscount;
+        this.percentDiscount = percentDuscount;
     }
     
     

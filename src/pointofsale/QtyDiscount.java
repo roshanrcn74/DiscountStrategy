@@ -18,10 +18,10 @@ public class QtyDiscount implements DiscountStrategy {
     }
 
     @Override
-    public double applyDiscount(double qty) {
+    public double getDiscount(double qty) {
         double discount = 0.0;
         if (qty >= this.qty){
-            discount += qty * this.discount;
+            discount = this.discount;
         }
         return discount;
     }

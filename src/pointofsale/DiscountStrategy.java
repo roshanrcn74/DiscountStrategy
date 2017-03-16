@@ -16,5 +16,5 @@ public interface DiscountStrategy {
      * @param qty
      * @return
      */
-    public abstract double applyDiscount(double qty);
+    public abstract double getDiscount(double qty);
 }

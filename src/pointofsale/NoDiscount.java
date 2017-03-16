@@ -15,7 +15,7 @@ public class NoDiscount implements DiscountStrategy {
     }
 
     @Override
-    public double applyDiscount(double qty) {
+    public double getDiscount(double qty) {
         return 0.0;
     }
     

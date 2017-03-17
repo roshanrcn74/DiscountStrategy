@@ -79,36 +79,61 @@ public class StandardReceipt implements ReceiptTypeStrategy {
         return lineItems;
     }
     
+    //Output goes to printer ot email 
     @Override
     public String getReceipt() {
+        String separator = "----------------------------------------------------------------------- \n";
         
         String receipt = this.messages[1] + "\n\n";
-        receipt += "Sold to " + (this.customer.getName() == null ? "New Customer" : this.customer.getName()) + "\n\n";
+        receipt += "Sold to " + (this.customer == null ? "New Customer" : this.customer.getName()) + "\n\n";
         receipt += "Receipt No : " + this.reciptNum + "\n\n";
-        receipt += "ID  Item            Price   Qty Subtotal    Discount \n";
-        receipt += "---------------------------------------------------- \n";
-        for (LineItem lineItem : this.lineItems){
-            receipt += lineItem.getLineItem() + "\n";
-        }
-        receipt += "\n" + "Net Total : " + getSubTotalSale() + "\n";
-        receipt += "Total Save : " + getTotalDiscountSale() + "\n";
-        receipt += "Total Due : " + getTotalDueSale() + "\n";
+        receipt += getItemsHeaders();
+        receipt += separator;
+        receipt += getReceiptBody() + "\n";
+
+        receipt += separator;
+        receipt += getReceiptFooter();
+        
         return receipt;
     }
-
+    //Output goes to display units like monitor or gui display
     @Override
     public String getReceiptToDisplay() {
+        String separator = "----------------------------------------------------------------------- \n";
+
         String receipt = this.messages[0] + "\n\n";
-        receipt += "ID  Item            Price   Qty Subtotal    Discount \n";
-        receipt += "---------------------------------------------------- \n";
-        for (LineItem lineItem : this.lineItems){
-            receipt += lineItem.getLineItem() + "\n";
-        }
-        receipt += "---------------------------------------------------- \n";
-        receipt += "\n" + "Net Total : " + getSubTotalSale() + "\n";
-        receipt += "Total Save " + getTotalDiscountSale() + "\n";
-        receipt += "Total Due " + getTotalDueSale() + "\n";
+        receipt += getItemsHeaders();
+        receipt += separator;
+        receipt += getReceiptBody() + "\n";
+
+        receipt += separator;
+        receipt += getReceiptFooter();
+        
         return receipt;       
+    }
+    private String getItemsHeaders(){    
+        return String.format("%1$-7s %2$-22s %3$-13s %4$-5s %5$-10s %6$-8s", "ID", "Item", "Price", "Qty", "SubTotal", "Discount \n");
+    }
+    
+    private String getReceiptBody(){
+        String receiptBody = "";
+                for (LineItem lineItem : this.lineItems){
+            receiptBody += String.format("%1$s %2$8s %3$8s", lineItem.getLineItem(), 
+                    String.format("%1$.2f",(lineItem.getQuantity() * lineItem.getProduct().getPrice())), 
+                    String.format("%1$.2f", lineItem.getProduct().getProductDiscount().getDiscount(lineItem.getQuantity()))) + "\n";
+        }
+        return receiptBody;
+    }
+    
+    private String getReceiptFooter(){
+        String receiptFooter = "";
+        String subTotal =String.format("%1$.2f",getSubTotalSale()) + "\n";
+        String totalSave = String.format("%1$.2f",getTotalDiscountSale()) + "\n";
+        String totalDue = String.format("%1$.2f",getTotalDueSale()) + "\n";
+        receiptFooter += String.format("Net Total : %1$10sTotal Save : %2$10sTotal Due : %3$10s",
+                subTotal, totalSave, totalDue);
+        
+        return receiptFooter;
     }
     private double getSubTotalSale(){
         double subTotal = 0.0;

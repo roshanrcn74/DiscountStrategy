@@ -18,13 +18,13 @@ public class PointOfSaleStartup {
         ReceiptDataAccessStrategy dataBase = new InMemoryDataAccess();
         OutputStrategy guiOutput = new GuiOutput();
         OutputStrategy consoleOutput = new ConsoleOutput();
-        String[] messages = {"Welcome to Kohls", "Thanks for shopping at Kohls"};
-        ReceiptTypeStrategy receiptType = new StandardReceipt(dataBase, messages, "00001");
+        String[] messages = {"Welcome to Kohl’s", "Thanks for shopping at Kohls"};
+        ReceiptTypeStrategy typeOfReceipt = new StandardReceipt(dataBase, messages, "00001");
         
         //ReceiptTypeStrategy receiptType = new GiftReceipt(dataBase, messages, "00001");
         //receiptType.setMessage("Thanks for sopping at Kohls");
         PointOfSaleTerminal posTerminal = new PointOfSaleTerminal(guiOutput, 
-                consoleOutput,receiptType);
+                consoleOutput,typeOfReceipt);
         
         posTerminal.startSale();
         posTerminal.addItemToSale("A101", 5);

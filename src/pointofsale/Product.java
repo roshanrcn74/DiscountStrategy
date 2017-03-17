@@ -23,35 +23,35 @@ public final class Product {
         
     }
 
-    public String getProductName() {
+    public final String getProductName() {
         return productName;
     }
 
-    public void setProductName(String productName) {
+    public final void setProductName(String productName) {
         this.productName = productName;
     }
 
-    public String getProductId() {
+    public final String getProductId() {
         return productId;
     }
 
-    public void setProductId(String priductId) {
+    public final void setProductId(String priductId) {
         this.productId = priductId;
     }
 
-    public double getPrice() {
+    public final double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public final void setPrice(double price) {
         this.price = price;
     }
 
-    public DiscountStrategy getProductDiscount() {
+    public final DiscountStrategy getProductDiscount() {
         return productDiscount;
     }
 
-    public void setProductDiscount(DiscountStrategy productDiscount) {
+    public final void setProductDiscount(DiscountStrategy productDiscount) {
         this.productDiscount = productDiscount;
     }
     

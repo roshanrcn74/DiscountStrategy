@@ -10,7 +10,7 @@ package pointofsale;
  * @author roshann
  */
 public final class PointOfSaleTerminal {
-    private final ReceiptTypeStrategy receipt;
+    private ReceiptTypeStrategy receipt;
     private OutputStrategy consoleOutput;
     private OutputStrategy guiOutput;
     
@@ -19,7 +19,7 @@ public final class PointOfSaleTerminal {
     PointOfSaleTerminal(OutputStrategy guiOutput, OutputStrategy consoleOutput, ReceiptTypeStrategy receiptType){
         setConsoleOutput(consoleOutput);
         setGuiOutput(guiOutput);
-        this.receipt = receiptType;
+        setReceipt(receiptType);
     }
     
     public void startSale(){
@@ -52,5 +52,13 @@ public final class PointOfSaleTerminal {
 
     public void setGuiOutput(OutputStrategy guiOutput) {
         this.guiOutput = guiOutput;
-    }    
+    }
+    
+    public void setReceipt(ReceiptTypeStrategy receipt ){
+        if (receipt == null){
+            
+        }
+        this.receipt = receipt;
+    }
+    
 }

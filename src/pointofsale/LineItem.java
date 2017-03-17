@@ -26,10 +26,11 @@ public final class LineItem {
     }
     
     public String getLineItem(){
-        String lineItem = "";
+        String lineItem;
         
         lineItem = String.format("%1$s %2$20s %3$10s %4$10s ", product.getProductId(),
-                product.getProductName(), String.format("%1$.2f",product.getPrice()), String.format("%1$.0f",this.quantity));
+                product.getProductName(), String.format("%1$.2f",product.getPrice()),
+                String.format("%1$.0f",this.quantity));
         
         return lineItem;
     }

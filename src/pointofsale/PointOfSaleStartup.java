@@ -21,7 +21,7 @@ public class PointOfSaleStartup {
         String[] messages = {"Welcome to Kohl’s", "Thanks for shopping at Kohls"};
         ReceiptTypeStrategy typeOfReceipt = new StandardReceipt(dataBase, messages, "00001");
         
-        //ReceiptTypeStrategy receiptType = new GiftReceipt(dataBase, messages, "00001");
+        //ReceiptTypeStrategy typeOfReceipt = new GiftReceipt(dataBase, messages, "00001");
         //receiptType.setMessage("Thanks for sopping at Kohls");
         PointOfSaleTerminal posTerminal = new PointOfSaleTerminal(guiOutput, 
                 consoleOutput,typeOfReceipt);

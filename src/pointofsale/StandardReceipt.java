@@ -26,7 +26,7 @@ public class StandardReceipt implements ReceiptTypeStrategy {
     }
     
     @Override
-    public void addLineItem(String productID, double qty) {
+    public final void addLineItem(String productID, double qty) {
         LineItem lineItem = new LineItem(productID, qty, dataBase);
         addLineItemsToArray(lineItem);   
     }
@@ -51,7 +51,7 @@ public class StandardReceipt implements ReceiptTypeStrategy {
         this.lineItems = lineItems;    
     }
 
-    public Customer getCustomer() {
+    public final Customer getCustomer() {
         return customer;
     }
 
@@ -75,13 +75,13 @@ public class StandardReceipt implements ReceiptTypeStrategy {
         setCustomer(this.dataBase.findCustomer(customerID));
     }
 
-    public LineItem[] getLineItems() {
+    public final LineItem[] getLineItems() {
         return lineItems;
     }
     
     //Output goes to printer ot email 
     @Override
-    public String getReceipt() {
+    public final String getReceipt() {
         String separator = "----------------------------------------------------------------------- \n";
         
         String receipt = this.messages[1] + "\n\n";
@@ -98,7 +98,7 @@ public class StandardReceipt implements ReceiptTypeStrategy {
     }
     //Output goes to display units like monitor or gui display
     @Override
-    public String getReceiptToDisplay() {
+    public final String getReceiptToDisplay() {
         String separator = "----------------------------------------------------------------------- \n";
 
         String receipt = this.messages[0] + "\n\n";
@@ -111,11 +111,11 @@ public class StandardReceipt implements ReceiptTypeStrategy {
         
         return receipt;       
     }
-    private String getItemsHeaders(){    
+    private final String getItemsHeaders(){    
         return String.format("%1$-7s %2$-22s %3$-13s %4$-5s %5$-10s %6$-8s", "ID", "Item", "Price", "Qty", "SubTotal", "Discount \n");
     }
     
-    private String getReceiptBody(){
+    private final String getReceiptBody(){
         String receiptBody = "";
                 for (LineItem lineItem : this.lineItems){
             receiptBody += String.format("%1$s %2$8s %3$8s", lineItem.getLineItem(), 
@@ -130,7 +130,7 @@ public class StandardReceipt implements ReceiptTypeStrategy {
         String subTotal =String.format("%1$.2f",getSubTotalSale()) + "\n";
         String totalSave = String.format("%1$.2f",getTotalDiscountSale()) + "\n";
         String totalDue = String.format("%1$.2f",getTotalDueSale()) + "\n";
-        receiptFooter += String.format("Net Total : %1$10sTotal Save : %2$10sTotal Due : %3$10s",
+        receiptFooter += String.format("Net Total  : %1$10sTotal Save : %2$10sTotal Due  : %3$10s",
                 subTotal, totalSave, totalDue);
         
         return receiptFooter;
@@ -158,7 +158,7 @@ public class StandardReceipt implements ReceiptTypeStrategy {
     }
 
     @Override
-    public String[] getMessage() {
+    public final String[] getMessage() {
         return messages;
     }
 

@@ -25,7 +25,7 @@ public class GiftReceipt implements ReceiptTypeStrategy{
     }
 
     @Override
-    public String getReceipt() {
+    public final String getReceipt() {
         String receipt = this.messages[1] + "\n\n";
         receipt += "Sold to : " + (this.customer == null ? "New Customer" : this.customer.getName()) + "\n\n";
         receipt += "Receipt No : " + this.reciptNum + "\n\n";
@@ -38,7 +38,7 @@ public class GiftReceipt implements ReceiptTypeStrategy{
     }
     
     @Override
-    public String getReceiptToDisplay() {
+    public final String getReceiptToDisplay() {
         String receipt = this.messages[0] + "\n\n";
         for (LineItem lineItem : this.lineItems){
             receipt += lineItem.getLineItem() + "\n";
@@ -56,7 +56,7 @@ public class GiftReceipt implements ReceiptTypeStrategy{
     }
 
     @Override
-    public void addLineItem(String productID, double qty) {
+    public final void addLineItem(String productID, double qty) {
         LineItem lineItem = new LineItem(productID, qty, dataBase);
         addLineItemsToArray(lineItem);   
     }
@@ -78,16 +78,16 @@ public class GiftReceipt implements ReceiptTypeStrategy{
         this.dataBase = dataBase;
     }
 
-    public void setLineItems(LineItem[] lineItems) {
+    public final void setLineItems(LineItem[] lineItems) {
         this.lineItems = lineItems;
     }
 
-    public void setCustomer(Customer customer) {
+    public final void setCustomer(Customer customer) {
         this.customer = customer;
     }   
     
     @Override
-        public String[] getMessage() {
+    public final String[] getMessage() {
         return messages;
     }
 
@@ -98,7 +98,7 @@ public class GiftReceipt implements ReceiptTypeStrategy{
         }   
     }
 
-    public String getReciptNum() {
+    public final String getReciptNum() {
         return reciptNum;
     }
 

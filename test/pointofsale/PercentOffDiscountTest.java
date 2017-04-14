@@ -27,7 +27,8 @@ public class PercentOffDiscountTest {
     
     @After
     public void tearDown() {
-       
+              percentOffDiscount = null;
+
     }
 
     /**
